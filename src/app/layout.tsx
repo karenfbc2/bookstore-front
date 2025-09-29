@@ -9,6 +9,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <h1 className="text-xl font-bold">Bookstore – Autores</h1>
           <nav className="flex gap-3">
             <Link href="/authors">Autores</Link>
+            <Link href="/books">Libros</Link>
             <Link href="/crear" className="px-3 py-1 rounded bg-black text-white">Crear Autor</Link>
           </nav>
         </header>
