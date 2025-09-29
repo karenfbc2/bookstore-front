@@ -20,11 +20,12 @@ export default function BookCard({ book }: { book: Book }) {
         <h3 className="font-semibold text-lg">{book.name}</h3>
         <p className="text-sm text-neutral-600">Description: {book.description}</p>
         <p className="text-xs mt-1">Publishing Date: {book.publishingDate?.slice(0, 10)}</p>
+    
 
         {/* Botones de acción */}
         <div className="mt-3 flex gap-2">
           <Link
-            href={`/books/${book.id}/detalle`}
+            href={`/books/${book.id}/detail`}
             className="px-3 py-1 border rounded hover:bg-neutral-100"
           >
             Ver
@@ -34,3 +35,5 @@ export default function BookCard({ book }: { book: Book }) {
     </div>
   );
 }
+
+

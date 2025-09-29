@@ -21,6 +21,30 @@ export default function AuthorCard({ author }: { author: Author }) {
         <p className="text-sm text-neutral-600">{author.description}</p>
         <p className="text-xs mt-1">Nació: {author.birthDate?.slice(0, 10)}</p>
 
+        {author.books?.length > 0 && (
+        <div className="mt-2 text-xs">
+          <p className="font-semibold">Libros:</p>
+          <ul className="list-disc list-inside">
+            {author.books.map(b => (
+              <li key={b.id}>{b.name}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+
+        {author.prizes?.length > 0 && (
+          <div className="mt-2 text-xs">
+            <p className="font-semibold">Premios:</p>
+            <ul className="list-disc list-inside">
+              {author.prizes.map(p => (
+                <li key={p.id}>{p.name}</li>
+            ))}
+          </ul>
+        </div>
+        )}
+
+
         {/* Botones de acción */}
         <div className="mt-3 flex gap-2">
           <Link

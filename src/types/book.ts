@@ -1,3 +1,7 @@
+import { Review } from "./review";
+
+export const DEFAULT_EDITORIAL = "Norma";
+
 export interface Book {
   id?: number;
   name: string;
@@ -5,6 +9,6 @@ export interface Book {
   description: string;
   image: string;
   publishingDate: string; // Formato "YYYY-MM-DD"
-  editorial: string;
-  reviews: string;
+  editorial?: string;
+  reviews?: Review[];
 }

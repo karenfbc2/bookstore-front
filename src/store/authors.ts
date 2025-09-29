@@ -1,5 +1,7 @@
 import { create } from "zustand";
 import { Author } from "../types/author";
+import { Book } from "../types/book";
+import { Prize } from "../types/prize";
 import { api } from "../lib/api";
 
 type State = {
@@ -7,7 +9,7 @@ type State = {
   loaded: boolean;
   error?: string;
   fetchAll: () => Promise<void>;
-  create: (a: Author) => Promise<Author>;
+  create: (a: Author, b: Book, p: Prize) => Promise<Author>;
   update: (id: number, a: Author) => Promise<Author>;
   remove: (id: number) => Promise<void>;
 };
@@ -23,14 +25,35 @@ export const useAuthorsStore = create<State>((set, get) => ({
       set({ error: e.message, loaded: true });
     }
   },
-  async create(a) {
-    const created = await api<Author>("/authors", {
+  async create(author, book, prize) {
+
+    const createdAuthor = await api<Author>("/authors", {
       method: "POST",
-      body: JSON.stringify(a),
+      body: JSON.stringify(author),
     });
-    set({ authors: [created, ...get().authors] });
-    return created;
+
+    const createdBook = await api<Book>("/books", {
+      method: "POST",
+      body: JSON.stringify(book),
+    });
+
+    await api(`/authors/${createdAuthor.id}/books/${createdBook.id}`, {
+      method: "POST",
+    });
+
+    const createdPrize = await api<Prize>("/prizes", {
+      method: "POST",
+      body: JSON.stringify(prize),
+    });
+
+    await api(`/prizes/${createdPrize.id}/author/${createdAuthor.id}`, {
+      method: "POST",
+    });
+
+    set({ authors: [createdAuthor, ...get().authors] });
+    return createdAuthor;
   },
+  
   async update(id, a) {
     const updated = await api<Author>(`/authors/${id}`, {
       method: "PUT",
